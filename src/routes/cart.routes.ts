@@ -5,13 +5,24 @@ import { ObjectId } from "mongodb";
 
 const cartRoutes = Router();
 
-cartRoutes.use(express.json());
-
 cartRoutes.get('/', async (req: Request, res: Response) => {
     try {
         const carts = (await collections.carts?.find({}).toArray()) as Cart[];
 
         res.status(200).send(carts);
+    } catch (error: any) {
+        res.status(500).send(error.message);
+    }
+});
+
+cartRoutes.get('/:id', async (req: Request, res: Response) => {
+    const id = req?.params?.id;
+
+    try {
+        const query = { _id: new ObjectId(id) };
+        const cart = (await collections.carts?.findOne(query)) as Cart;
+
+        res.status(200).send(cart);
     } catch (error: any) {
         res.status(500).send(error.message);
     }

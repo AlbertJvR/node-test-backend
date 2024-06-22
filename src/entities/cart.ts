@@ -5,9 +5,9 @@ export default class Cart {
     public items: CartItem[];
     public totalQuantity: number;
 
-    constructor() {
-        this.items = [];
-        this.totalQuantity = 0;
+    constructor(items: CartItem[], totalQuantity: number) {
+        this.items = items || [];
+        this.totalQuantity = totalQuantity || 0;
     }
 }
 
